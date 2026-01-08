@@ -70,11 +70,7 @@ void Title::Draw()
 	// DirectXCommonインスタンスの取得
 	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	// 3Dモデル描画前処理
-	Model::PreDraw();
-
-	// 3Dモデル描画後処理
-	Model::PostDraw();
+	
 
 	//Sprite::PreDraw();
 
