@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "KamataEngine.h"
 #include "Fade.h"
+
 class Title 
 {
 public:
@@ -30,21 +31,18 @@ public:
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	// スプライト
-	KamataEngine::Sprite* titleSprite_ = nullptr;
+	//KamataEngine::Sprite* titleSprite_ = nullptr;
 
 	// 自キャラ
 	//Player* player_ = nullptr;
 
 private:
-	// 3Dモデルデータ
-	KamataEngine::Model* model_ = nullptr;
-	// モデルプレイヤー
-	KamataEngine::Model* modelPlayer_ = nullptr;
+	
 	// カメラ
 	KamataEngine::Camera camera_;
 	// ワールドトランスフォーム
 	KamataEngine::WorldTransform worldTransform_;
-	KamataEngine::WorldTransform worldTransformPlayer_;
+	
 
 	// フェード
 	Fade* fade_ = nullptr;

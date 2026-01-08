@@ -40,11 +40,11 @@ void Player::Update()
 	AnimateTurn();
 
 	// キャラクターの移動ベクトル
-	Vector3 move = {0, 0, 0};
+	//Vector3 move = {0, 0, 0};
 	// キャラクターの移動速度
-	const float kCharacterSpeed = 0.2f;
+	//const float kCharacterSpeed = 0.2f;
 
-	Vector3 acceleration = {};
+	//Vector3 acceleration = {};
 
 
 
@@ -81,7 +81,7 @@ void Player::Update()
 	//}
 
 	// 座標移動(ベクトルの加算)
-	worldTransform_.translation_ += move;
+	//worldTransform_.translation_ += move;
 
 	// アフィン変換行列
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
@@ -141,39 +141,4 @@ KamataEngine::Vector3 Player::GetWorldPosition()
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
-}
-
-AABB Player::GetAABB() 
-{
-	KamataEngine::Vector3 worldPos = GetWorldPosition();
-
-	AABB aabb;
-
-	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
-	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};
-
-	return aabb;
-}
-
-// 衝突応答
-void Player::OnCollition(const Enemy* enemy)
-{
-	(void)enemy;
-
-	// ここで受けるダメージ量を決定（例: 1）
-	const int damage = 1;
-
-	hp_ -= damage;
-	if (hp_ <= 0) 
-	{
-		hp_ = 0;
-		isDead_ = true;
-		// 必要なら死亡時の処理（アニメ・音・フラグ等）
-	}
-
-	// デスフラグを立てる
-	// isDead_ = true;
-
-	// ジャンプ開始
-	// velocity_ += KamataEngine::Vector3(0, kJumpAcceleration, 0);
 }
