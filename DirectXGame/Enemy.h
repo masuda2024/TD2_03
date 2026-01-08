@@ -10,50 +10,50 @@ class P_Bullet;
 class Enemy 
 {
 public:
-	// ƒfƒXƒtƒ‰ƒO
+	// ãƒ‡ã‚¹ãƒ•ãƒ©ã‚°
 	bool isenemyDead_ = false;
-	// ƒfƒXƒtƒ‰ƒO‚Ìgetter
+	// ãƒ‡ã‚¹ãƒ•ãƒ©ã‚°ã®getter
 	// bool IsEnemyDead() const { return isenemyDead_; }
 
-	// “G‚Ì“–‚½‚è”»’èƒTƒCƒY
+	// æ•µã®å½“ãŸã‚Šåˆ¤å®šã‚µã‚¤ã‚º
 	static inline const float kWidth = 10.0f;
 	static inline const float kHeight = 10.0f;
 
-	// •às‚Ì‘¬‚³
+	// æ­©è¡Œã®é€Ÿã•
 	static inline const float kWalkSpeed = 0.04f;
 
-	// Å‰‚ÌŠp“x[“x]
+	// æœ€åˆã®è§’åº¦[åº¦]
 	static inline const float kWalkMotionAngleStart = 5.0f;
 
-	// ÅŒã‚ÌŠp“x[“x]
+	// æœ€å¾Œã®è§’åº¦[åº¦]
 	static inline const float kWalkMotionAngleEnd = 5.0f;
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌüŠú‚Æ‚È‚éŠÔ[•b]
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å‘¨æœŸã¨ãªã‚‹æ™‚é–“[ç§’]
 	static inline const float kWalkMotionTime = 5.0f;
 
-	// Œo‰ßŠÔ
+	// çµŒéæ™‚é–“
 	float walkTimer_ = 0.0f;
 
-	// ƒ[ƒ‹ƒhÀ•W‚ğæ“¾
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’å–å¾—
 	KamataEngine::Vector3 GetWorldPosition();
 	
-#pragma region ƒvƒŒƒCƒ„[‚Ì’e‚Æ“G
-	// AABB‚ğæ“¾
+#pragma region ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾ã¨æ•µ
+	// AABBã‚’å–å¾—
 	AABB GetAABB();
-	// Õ“Ë‰“š
+	// è¡çªå¿œç­”
 	void OnCollition(const P_Bullet* playerBullet);
 #pragma endregion
 
-	// ‘Ì—Í•\¦
+	// ä½“åŠ›è¡¨ç¤º
 	int enemyHp;
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3& position);
 
-	// XV
+	// æ›´æ–°
 	void Update();
 
-	// •`‰æ
+	// æç”»
 	void Draw();
 
 	int E_GetHP() const { return hp_; }
@@ -62,31 +62,31 @@ public:
 
 private:
 	///////////////
-	// “G¶‰EˆÚ“®//
+	// æ•µå·¦å³ç§»å‹•//
 	//////////////
 	enum class EnemyState 
 	{
-		IdleMove, // ã‰º‚É—h‚ê‚éó‘Ô
-		MoveLeft, // ¶‚ÖˆÚ“®
-		MoveRight // ‰E‚Ö–ß‚é
+		IdleMove, // ä¸Šä¸‹ã«æºã‚Œã‚‹çŠ¶æ…‹
+		MoveLeft, // å·¦ã¸ç§»å‹•
+		MoveRight // å³ã¸æˆ»ã‚‹
 	};
 
 	EnemyState state_ = EnemyState::IdleMove;
 
-	// ƒ‰ƒ“ƒ_ƒ€‚Ås“®‚·‚é‚½‚ß‚Ìƒ^ƒCƒ}[
+	// ãƒ©ãƒ³ãƒ€ãƒ ã§è¡Œå‹•ã™ã‚‹ãŸã‚ã®ã‚¿ã‚¤ãƒãƒ¼
 	float actionTimer_ = 0.0f;
 	float nextActionTime_ = 0.0f;
 
-	float startX_; // ‰ŠúˆÊ’uXi–ß‚é‚½‚ßj
+	float startX_; // åˆæœŸä½ç½®Xï¼ˆæˆ»ã‚‹ãŸã‚ï¼‰
 	//////////////////
-	// “G¶‰EˆÚ“®I///
+	// æ•µå·¦å³ç§»å‹•çµ‚///
 	/////////////////
 
-	// ƒ[ƒ‹ƒh•ÏŠ·ƒf[ƒ^
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿
 	KamataEngine::WorldTransform worldTransform_;
-	// ƒ‚ƒfƒ‹
+	// ãƒ¢ãƒ‡ãƒ«
 	KamataEngine::Camera* camera_;
-	// ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
 	// uint32_t textureHandle_ = 0u;
 
 	KamataEngine::Model* model_;
