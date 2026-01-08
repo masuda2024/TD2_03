@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include "MyMath.h"
 #include "CameraController.h"
 #include "Fade.h"
@@ -30,7 +30,6 @@ void Game::Initialize()
 	modelskydome_ = Model::CreateFromOBJ("SkyDome", true);
 
 #pragma region プレイヤー
-
 	
 	// プレイヤー
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
@@ -119,7 +118,11 @@ void Game::Update()
 	
 	player_->Update();
 	// プレイヤーの攻撃を呼び出す
-	PlayerAttack();
+	   if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+    {
+		P_Bullet* bullet = player_->Shoot(); 
+		bullets_.push_back(bullet);   
+    }
 	// プレイヤーの弾を更新
 	for (P_Bullet* bullet : bullets_) 
 	{
@@ -248,26 +251,12 @@ void Game::Update()
 		camera_.UpdateMatrix();
 	}
 }
-
+ 
 // プレイヤーの攻撃
 void Game::PlayerAttack()
 {
 	// スペースキーを押して弾を撃つ
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
-	{
-		
-		// 弾の速度
-		const float kBulletSpeed = 1.0f;
-		Vector3 velocity = {kBulletSpeed, 0.0f, 0.0f};
 
-		// 自キャラの座標を取得(弾を自キャラと同じ位置にする)
-		const KamataEngine::Vector3 playerBulletPosition = player_->GetWorldPosition();
-
-		playerBullet_ = new P_Bullet();
-		playerBullet_->Initialize(modelPlayerBullet_, &camera_, playerBulletPosition, velocity);
-
-		bullets_.push_back(playerBullet_);
-	}
 }
 
 // フェーズ

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "KamataEngine.h"
 #include"MyMath.h"
 
@@ -28,6 +28,9 @@ public:
 	static inline const float kHeight = 0.8f;
 	// ワールド座標を取得
 	KamataEngine::Vector3 GetWorldPosition();
+
+	void SetPosition(const KamataEngine::Vector3& position);
+
 
 #pragma region プレイヤーの弾と敵の衝突
 

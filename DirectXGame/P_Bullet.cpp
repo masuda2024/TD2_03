@@ -1,4 +1,4 @@
-﻿#include "P_Bullet.h"
+#include "P_Bullet.h"
 #include "KamataEngine.h"
 
 #include"Player.h"
@@ -65,6 +65,8 @@ KamataEngine::Vector3 P_Bullet::GetWorldPosition()
 
 	return worldPos;
 }
+
+void P_Bullet::SetPosition(const KamataEngine::Vector3& position) { worldTransform_.translation_ = position; }
 
 #pragma region プレイヤーの弾と敵の衝突
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"KamataEngine.h"
 
 using namespace KamataEngine;
@@ -19,7 +19,7 @@ public:
 	void SetTarget(Player* target) { target_ = target; }
 
 	// 追従対象とカメラの座標の差(オフセット)
-	Vector3 targetOffset_ = {0, 0, -50.0f};
+	Vector3 targetOffset_ = {0, 0, -30.0f};
 
 	const KamataEngine::Camera& GetViewProjection() const { return camera_; }
 

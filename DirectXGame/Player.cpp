@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 
 #include"KamataEngine.h"
 #include"Game.h"
@@ -51,7 +51,7 @@ void Player::Update()
 	cosValue_ = std::cos(angle_);
 	sinValue_ = std::sin(angle_);
 
-	constexpr float kTurnSpeed = 0.09f;
+	constexpr float kTurnSpeed = 0.04f;
 	worldTransform_.rotation_.x += kTurnSpeed;
 	if (worldTransform_.rotation_.x > 6.2831853f) 
 	{
@@ -95,6 +95,32 @@ void Player::Update()
 	// アフィン変換行列
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	worldTransform_.TransferMatrix(); // プレイヤーの座標の計算
+}
+
+P_Bullet* Player::Shoot() {
+	P_Bullet* bullet = new P_Bullet();
+
+	float pitch = worldTransform_.rotation_.x;
+	float yaw = worldTransform_.rotation_.y;
+
+	KamataEngine::Vector3 forward;
+	forward.x = cosf(pitch) * sinf(yaw);
+	forward.y = -sinf(pitch);
+	forward.z = cosf(pitch) * cosf(yaw);
+
+
+	KamataEngine::Vector3 spawnPos = worldTransform_.translation_;
+
+	// Bullet を初期化
+	bullet->Initialize(
+	    model_, 
+	    camera_,  
+	    spawnPos, 
+		forward 
+	);
+
+return bullet;
+
 }
 
 // プレイヤーの描画(敵当たったら非表示になる)
