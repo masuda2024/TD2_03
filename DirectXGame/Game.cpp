@@ -44,7 +44,7 @@ void Game::Initialize()
 	player_ = new Player();
 
 	// プレイヤーの座標を指定
-	KamataEngine::Vector3 playerPosition = {-10, 1, 0};
+	KamataEngine::Vector3 playerPosition = {0, 0, 0};
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 
 	// プレイヤーの弾

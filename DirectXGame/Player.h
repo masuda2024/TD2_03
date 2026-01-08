@@ -90,6 +90,27 @@ public:
 	// 描画
 	void Draw();
 
+
+	#pragma region 回転
+	
+
+
+	bool prevOnGround_ = false;
+
+	float angle_ = 0.0f;
+	float cosValue_ = 0.0f;
+	float sinValue_ = 0.0f;
+
+	
+
+	#pragma endregion
+
+
+
+
+
+
+
 	static inline const float kBlank = 0.9f;
 
 	void AnimateTurn();
@@ -97,8 +118,7 @@ public:
 	// 弾
 	std::list<P_Bullet*> bullets_;
 
-	// 攻撃
-	void Attack();
+	
 
 	~Player();
 

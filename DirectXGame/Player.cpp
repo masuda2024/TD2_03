@@ -46,9 +46,18 @@ void Player::Update()
 
 	//Vector3 acceleration = {};
 
+	// --- メンバ変数を更新 ---
+	angle_ = worldTransform_.rotation_.x;
+	cosValue_ = std::cos(angle_);
+	sinValue_ = std::sin(angle_);
 
+	constexpr float kTurnSpeed = 0.09f;
+	worldTransform_.rotation_.x += kTurnSpeed;
+	if (worldTransform_.rotation_.x > 6.2831853f) 
+	{
+		worldTransform_.rotation_.x -= 6.2831853f;
+	}
 
-	
 	//// 押した方向で移動ベクトルを変更(左右)
 	//if (Input::GetInstance()->PushKey(DIK_A)) 
 	//{
@@ -118,6 +127,8 @@ void Player::AnimateTurn()
 
 Player::~Player() {}
 
+#pragma region プレイヤーの弾と敵の衝突
+
 KamataEngine::Vector3 Player::CornerPosition(const KamataEngine::Vector3& center, Corner corner)
 {
 	KamataEngine::Vector3 offsetTable[kNumCorner] =
@@ -142,3 +153,5 @@ KamataEngine::Vector3 Player::GetWorldPosition()
 
 	return worldPos;
 }
+
+#pragma endregion
