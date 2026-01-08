@@ -1,7 +1,6 @@
-#pragma once
+﻿#pragma once
 
 #include "KamataEngine.h"
-//#include "E_Bullet.h"
 #include "MyMath.h"
 #include <list>
 

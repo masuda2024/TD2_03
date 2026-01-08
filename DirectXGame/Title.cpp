@@ -1,21 +1,16 @@
 #include "Title.h"
+#include "KamataEngine.h"
 
 using namespace KamataEngine;
 
 void Title::Initialize()
 {
-	// タイトルのスプライト
-	//textureHandle_ = TextureManager::Load("title.png");
-	//titleSprite_ = KamataEngine::Sprite::Create(textureHandle_, {0, 0});
-
-	//Botan_ = Audio::GetInstance()->LoadWave("Sounds/BossBotan.mp3");
-
+	
 	// カメラの初期化
 	camera_.Initialize();
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
-	worldTransformPlayer_.Initialize();
-
+	
 	// フェード
 	fade_ = new Fade();
 	fade_->Initialize();
@@ -73,19 +68,15 @@ void Title::Update()
 void Title::Draw() 
 {
 	// DirectXCommonインスタンスの取得
-	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	// 3Dモデル描画前処理
-	Model::PreDraw();
+	
 
-	// 3Dモデル描画後処理
-	Model::PostDraw();
+	//Sprite::PreDraw();
 
-	Sprite::PreDraw(dxCommon->GetCommandList());
+	//titleSprite_->Draw();
 
-	titleSprite_->Draw();
-
-	Sprite::PostDraw();
+	//Sprite::PostDraw();
 
 	// フェード
 	fade_->Draw();
@@ -97,5 +88,5 @@ Title::~Title()
 	//  フェード
 	delete fade_;
 	// タイトルのスプライト
-	delete titleSprite_;
+	//delete titleSprite_;
 }

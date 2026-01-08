@@ -1,5 +1,7 @@
 #include <Windows.h>
 #include"KamataEngine.h"
+
+
 #include"Title.h"
 #include"Tutorial.h"
 #include"Game.h"
@@ -47,7 +49,8 @@ Over* gameOver = nullptr;
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
-	
+	// タイトルバー
+	KamataEngine::Initialize(L"TD2_03");
 	// ImGuiManagerインスタンスの取得
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 
@@ -122,7 +125,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 
 	// nullptrの代入
 
-	//gameScene = nullptr;
+	gameScene = nullptr;
 
 	KamataEngine::Finalize();
 
@@ -170,8 +173,8 @@ void ChangeScene()
 			// シーンの変更
 			scene = Scene::kGame;
 			// 新シーンの生成と初期化
-			//gameScene = new GameScene();
-			//gameScene->Initialize();
+			gameScene = new Game();
+			gameScene->Initialize();
 
 			// ゲームシーンの音楽を再生
 			//GVoiceHandle_ = Audio::GetInstance()->PlayWave(gameHandle_, true);

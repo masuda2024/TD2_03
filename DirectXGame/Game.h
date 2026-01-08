@@ -11,7 +11,7 @@
 
 
 #include "Enemy.h"
-//#include "E_DeathParticle.h"
+#include "E_DeathParticle.h"
 
 
 
@@ -101,12 +101,12 @@ private:
 	void PlayerAttack();
 
 	// プレイヤーのパーティクル
-	P_DeathParticle* deathParticles_ = nullptr;
-	KamataEngine::Model* modelParticle_ = nullptr;
+	P_DeathParticle* P_Particles_ = nullptr;
+	KamataEngine::Model* model_P_Particle_ = nullptr;
 
 	
 
-	uint32_t PBSound_ = 0;
+	
 
 #pragma endregion
 
@@ -117,8 +117,8 @@ private:
 	KamataEngine::Model* modelEnemy_ = nullptr;
 
 	// 敵のパーティクル
-	E_DeathParticle* enemyDeathParticles_ = nullptr;
-	KamataEngine::Model* modelE_Particle_ = nullptr;
+	E_DeathParticle* E_Particles_ = nullptr;
+	KamataEngine::Model* model_E_Particle_ = nullptr;
 
 	
 #pragma endregion
