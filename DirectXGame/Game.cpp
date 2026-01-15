@@ -47,9 +47,11 @@ void Game::Initialize()
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 
 	// プレイヤーの弾
-	playerBullet_ = new P_Bullet();
-	playerBullet_->Initialize(modelPlayerBullet_, &camera_, playerPosition, velocity_);
-
+	for (int i = 0; i < 28; i++) {
+		P_Bullet* bullet = new P_Bullet();
+		bullet->Initialize(modelPlayerBullet_, &camera_, player_);
+		bullets_.push_back(bullet);
+	}
 	// プレイヤーのデスパーティクル
 	P_Particles_ = new P_DeathParticle();
 	P_Particles_->Initialize(model_P_Particle_, &camera_, playerPosition);
@@ -120,13 +122,16 @@ void Game::Update()
 	// プレイヤーの攻撃を呼び出す
 	   if (Input::GetInstance()->TriggerKey(DIK_SPACE))
     {
-		P_Bullet* bullet = player_->Shoot(); 
-		bullets_.push_back(bullet);   
+		for (P_Bullet* bullet : bullets_) {
+			if (!bullet->IsActive()) {
+				bullet->StartAttack();
+				break; 
+			}
+		}
     }
 	// プレイヤーの弾を更新
-	for (P_Bullet* bullet : bullets_) 
-	{
-		bullet->Update();
+	for (P_Bullet* bullet : bullets_) {
+		bullet->Update(); 
 	}
 #pragma endregion
 
@@ -251,13 +256,6 @@ void Game::Update()
 		camera_.UpdateMatrix();
 	}
 }
- 
-// プレイヤーの攻撃
-void Game::PlayerAttack()
-{
-	// スペースキーを押して弾を撃つ
-
-}
 
 // フェーズ
 void Game::ChangePhase()
@@ -373,28 +371,13 @@ void Game::Draw()
 
 	if (phase_ == Phase::kPlay) 
 	{
-		// スペースキーを押して弾を撃つ
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
-		{
-			playerBulletLifeTime--;
-		}
+		
 
 		// 弾の継続時間が0になるまで撃てる
-		if (playerBulletLifeTime > 0) 
-		{
 			for (P_Bullet* bullet : bullets_)
 			{
 				bullet->Draw();
 			}
-		}
-
-		// 弾の継続時間が0になったら継続時間をリセットする
-		if (playerBulletLifeTime <= 0) 
-		{
-			// delete playerBullet_;
-			bullets_.clear();
-			playerBulletLifeTime = 20;
-		}
 	}
 
 #pragma endregion

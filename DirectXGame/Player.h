@@ -75,6 +75,9 @@ public:
 
 	// ワールド座標を取得
 	KamataEngine::Vector3 GetWorldPosition();	
+
+	const KamataEngine::Vector3& GetRotation() const { return worldTransform_.rotation_; }
+
 	// 初期化
 	void Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3& position);
 
@@ -98,9 +101,6 @@ public:
 	static inline const float kBlank = 0.9f;
 
 	void AnimateTurn();
-
-	// 弾
-	std::list<P_Bullet*> bullets_;
 
 	
 

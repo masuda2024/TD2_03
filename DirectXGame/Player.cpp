@@ -97,32 +97,6 @@ void Player::Update()
 	worldTransform_.TransferMatrix(); // プレイヤーの座標の計算
 }
 
-P_Bullet* Player::Shoot() {
-	P_Bullet* bullet = new P_Bullet();
-
-	float pitch = worldTransform_.rotation_.x;
-	float yaw = worldTransform_.rotation_.y;
-
-	KamataEngine::Vector3 forward;
-	forward.x = cosf(pitch) * sinf(yaw);
-	forward.y = -sinf(pitch);
-	forward.z = cosf(pitch) * cosf(yaw);
-
-
-	KamataEngine::Vector3 spawnPos = worldTransform_.translation_;
-
-	// Bullet を初期化
-	bullet->Initialize(
-	    model_, 
-	    camera_,  
-	    spawnPos, 
-		forward 
-	);
-
-return bullet;
-
-}
-
 // プレイヤーの描画(敵当たったら非表示になる)
 void Player::Draw()
 {
