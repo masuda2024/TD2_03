@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "KamataEngine.h"
 #include"MyMath.h"
 #include"P_Bullet.h"
@@ -74,26 +74,22 @@ public:
 	const KamataEngine::Vector3& GetVelocity() const { return velocity_; }
 
 	// ワールド座標を取得
-	KamataEngine::Vector3 GetWorldPosition();
+	KamataEngine::Vector3 GetWorldPosition();	
 
+	const KamataEngine::Vector3& GetRotation() const { return worldTransform_.rotation_; }
 
-
-
-
-	
 	// 初期化
 	void Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, KamataEngine::Vector3& position);
 
 	// 更新
 	void Update();
 
+	P_Bullet* Shoot();
+
 	// 描画
 	void Draw();
 
-
 	#pragma region 回転
-	
-
 
 	bool prevOnGround_ = false;
 
@@ -101,22 +97,10 @@ public:
 	float cosValue_ = 0.0f;
 	float sinValue_ = 0.0f;
 
-	
-
 	#pragma endregion
-
-
-
-
-
-
-
 	static inline const float kBlank = 0.9f;
 
 	void AnimateTurn();
-
-	// 弾
-	std::list<P_Bullet*> bullets_;
 
 	
 

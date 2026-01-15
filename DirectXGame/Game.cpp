@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include "MyMath.h"
 #include "CameraController.h"
 #include "Fade.h"
@@ -30,7 +30,6 @@ void Game::Initialize()
 	modelskydome_ = Model::CreateFromOBJ("SkyDome", true);
 
 #pragma region プレイヤー
-
 	
 	// プレイヤー
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
@@ -48,9 +47,11 @@ void Game::Initialize()
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 
 	// プレイヤーの弾
-	playerBullet_ = new P_Bullet();
-	playerBullet_->Initialize(modelPlayerBullet_, &camera_, playerPosition, velocity_);
-
+	for (int i = 0; i < 28; i++) {
+		P_Bullet* bullet = new P_Bullet();
+		bullet->Initialize(modelPlayerBullet_, &camera_, player_);
+		bullets_.push_back(bullet);
+	}
 	// プレイヤーのデスパーティクル
 	P_Particles_ = new P_DeathParticle();
 	P_Particles_->Initialize(model_P_Particle_, &camera_, playerPosition);
@@ -119,11 +120,18 @@ void Game::Update()
 	
 	player_->Update();
 	// プレイヤーの攻撃を呼び出す
-	PlayerAttack();
+	   if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+    {
+		for (P_Bullet* bullet : bullets_) {
+			if (!bullet->IsActive()) {
+				bullet->StartAttack();
+				break; 
+			}
+		}
+    }
 	// プレイヤーの弾を更新
-	for (P_Bullet* bullet : bullets_) 
-	{
-		bullet->Update();
+	for (P_Bullet* bullet : bullets_) {
+		bullet->Update(); 
 	}
 #pragma endregion
 
@@ -249,27 +257,6 @@ void Game::Update()
 	}
 }
 
-// プレイヤーの攻撃
-void Game::PlayerAttack()
-{
-	// スペースキーを押して弾を撃つ
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
-	{
-		
-		// 弾の速度
-		const float kBulletSpeed = 1.0f;
-		Vector3 velocity = {kBulletSpeed, 0.0f, 0.0f};
-
-		// 自キャラの座標を取得(弾を自キャラと同じ位置にする)
-		const KamataEngine::Vector3 playerBulletPosition = player_->GetWorldPosition();
-
-		playerBullet_ = new P_Bullet();
-		playerBullet_->Initialize(modelPlayerBullet_, &camera_, playerBulletPosition, velocity);
-
-		bullets_.push_back(playerBullet_);
-	}
-}
-
 // フェーズ
 void Game::ChangePhase()
 {
@@ -384,28 +371,13 @@ void Game::Draw()
 
 	if (phase_ == Phase::kPlay) 
 	{
-		// スペースキーを押して弾を撃つ
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
-		{
-			playerBulletLifeTime--;
-		}
+		
 
 		// 弾の継続時間が0になるまで撃てる
-		if (playerBulletLifeTime > 0) 
-		{
 			for (P_Bullet* bullet : bullets_)
 			{
 				bullet->Draw();
 			}
-		}
-
-		// 弾の継続時間が0になったら継続時間をリセットする
-		if (playerBulletLifeTime <= 0) 
-		{
-			// delete playerBullet_;
-			bullets_.clear();
-			playerBulletLifeTime = 20;
-		}
 	}
 
 #pragma endregion

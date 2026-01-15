@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 
 #include"KamataEngine.h"
 #include"Game.h"
@@ -51,7 +51,7 @@ void Player::Update()
 	cosValue_ = std::cos(angle_);
 	sinValue_ = std::sin(angle_);
 
-	constexpr float kTurnSpeed = 0.09f;
+	constexpr float kTurnSpeed = 0.04f;
 	worldTransform_.rotation_.x += kTurnSpeed;
 	if (worldTransform_.rotation_.x > 6.2831853f) 
 	{

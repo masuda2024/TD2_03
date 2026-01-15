@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "KamataEngine.h"
 
 #include "CameraController.h"
@@ -91,14 +91,8 @@ private:
 	std::list<P_Bullet*> bullets_;
 	// 速度
 	KamataEngine::Vector3 velocity_;
-	// 弾の寿命(フレーム数)
-	int playerBulletLifeTime = 20; // 変更可能な左辺値にするためconstを外し型をintに変更    // スペースキーを押して弾を撃つ
-
+	
 #pragma endregion
-
-	// プレイヤーの弾の生成
-	P_Bullet* playerBullet_ = nullptr;
-	void PlayerAttack();
 
 	// プレイヤーのパーティクル
 	P_DeathParticle* P_Particles_ = nullptr;

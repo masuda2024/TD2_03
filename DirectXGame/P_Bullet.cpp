@@ -1,4 +1,4 @@
-﻿#include "P_Bullet.h"
+#include "P_Bullet.h"
 #include "KamataEngine.h"
 
 #include"Player.h"
@@ -12,7 +12,7 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
-void P_Bullet::Initialize(KamataEngine::Model* model, Camera* camera, const KamataEngine::Vector3& position, const KamataEngine::Vector3& velocity) {
+void P_Bullet::Initialize(KamataEngine::Model* model, Camera* camera, Player* player) {
 	// NULLポイントチェック
 	// assert(model);
 
@@ -20,38 +20,66 @@ void P_Bullet::Initialize(KamataEngine::Model* model, Camera* camera, const Kama
 
 	camera_ = camera;
 
-	// 速度を引数で受け取って初期化
-	velocity_ = velocity;
-
-	// 引数で受け取った初期座標をリセット
-	worldTransform_.translation_ = position;
+	player_ = player;
 
 	// ワールド変換データ初期化
 	worldTransform_.Initialize();
 
-	// Bulletvelocity_ = velocity;
+	isActive_ = false;
 }
 
 void P_Bullet::Update() 
 {
-	// 弾を移動
+	if (!isActive_) {
+		return;
+	}
+
 	worldTransform_.translation_ += velocity_;
+
+	timer_ += 1.0f / 60.0f;
+	if (timer_ >= kLifeTime) {
+		isActive_ = false;
+		return;
+	}
+
 
 	// アフィン変換行列
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	worldTransform_.TransferMatrix(); // プレイヤーの座標の計算
 }
 
+void P_Bullet::StartAttack() {
+	if (!player_)
+		return;
+	isActive_ = true;
+	timer_ = 0.0f;
+
+	 const auto& rot = player_->GetRotation();
+
+	float pitch = rot.x; // 上下
+	float yaw = rot.y;   // 左右
+
+	// Player の向き通りの forward
+
+	KamataEngine::Vector3 forward;
+	forward.x = cosf(pitch) * sinf(yaw);
+	forward.y = -sinf(pitch);
+	forward.z = -cosf(pitch) * cosf(yaw);
+
+	velocity_ = forward;
+
+	const float kSpawnOffset = 1.5f;
+	worldTransform_.translation_ = player_->GetWorldPosition() + forward * kSpawnOffset;
+
+}
+
 void P_Bullet::Draw() 
 {
-	// モデルの描画
-	model_->Draw(worldTransform_, *camera_);
-
-	// 終了なら何もしない
-	if (isFinished_)
-	{
+	if (!isActive_) {
 		return;
 	}
+
+	model_->Draw(worldTransform_, *camera_);
 }
 
 KamataEngine::Vector3 P_Bullet::GetWorldPosition() 
@@ -65,6 +93,8 @@ KamataEngine::Vector3 P_Bullet::GetWorldPosition()
 
 	return worldPos;
 }
+
+void P_Bullet::SetPosition(const KamataEngine::Vector3& position) { worldTransform_.translation_ = position; }
 
 #pragma region プレイヤーの弾と敵の衝突
 
