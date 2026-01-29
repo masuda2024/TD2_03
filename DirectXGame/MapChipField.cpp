@@ -69,7 +69,17 @@ MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex
 	return mapChipData_.data[yIndex][xIndex];
 }
 
-KamataEngine::Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { return Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0); }
+KamataEngine::Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) {
+
+	float offsetX = -(static_cast<float>(kNumBlockHorizontal) * kBlockWidth) * 0.5f;
+
+
+	return Vector3(
+		kBlockWidth * xIndex + offsetX,
+		kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 
+		0); 
+
+}
 
 MapChipField::IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	IndexSet indexSet = {};
