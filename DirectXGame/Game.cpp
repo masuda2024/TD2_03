@@ -128,8 +128,8 @@ void Game::GenerateBlocks() {
 
 	// 要素数を変更する
 	// 列数を設定
-	worldTransformBlocks_.resize(20);
-	for (uint32_t i = 0; i < 20; ++i) {
+	worldTransformBlocks_.resize(42);
+	for (uint32_t i = 0; i < 42; ++i) {
 		// 1列の要素数を設定
 		worldTransformBlocks_[i].resize(100);
 	}

@@ -71,20 +71,26 @@ MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex
 
 KamataEngine::Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) {
 
-	float offsetX = -(static_cast<float>(kNumBlockHorizontal) * kBlockWidth) * 0.5f;
+	float offsetX = -(static_cast<float>(kNumBlockHorizontal) * kBlockWidth) * 0.36f;
+	float offsetY = -(static_cast<float>(kNumBlockVirtical) * kBlockHeight) * 0.49f;
 
 
 	return Vector3(
-		kBlockWidth * xIndex + offsetX,
-		kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 
+		kBlockWidth * xIndex + offsetX, 
+		kBlockHeight * yIndex + offsetY,
 		0); 
 
 }
 
 MapChipField::IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	IndexSet indexSet = {};
-	indexSet.xIndex = static_cast<uint32_t>((position.x + kBlockWidth / 2) / kBlockWidth);
-	indexSet.yIndex = kNumBlockVirtical - 1 - static_cast<uint32_t>((position.y + kBlockHeight / 2) / kBlockHeight);
+
+	float offsetX = -(static_cast<float>(kNumBlockHorizontal) * kBlockWidth) * 0.36f;
+	float offsetY = -(static_cast<float>(kNumBlockVirtical) * kBlockHeight) * 0.49f;
+
+	indexSet.xIndex = static_cast<uint32_t>((position.x - offsetX) / kBlockWidth);
+	indexSet.yIndex = static_cast<uint32_t>((position.y - offsetY) / kBlockHeight);
+
 	return indexSet;
 }
 

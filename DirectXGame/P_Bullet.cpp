@@ -297,15 +297,17 @@ void P_Bullet::CheckMapCollisionLeft(CollisionMapInfo& info) {
 // 弾の反射処理
 void P_Bullet::CheckMapHit(CollisionMapInfo& info) {
 
-	worldTransform_.translation_ += info.move;
+// X軸反射
+	if (info.hitLeftWall)
+		velocity_.x = std::abs(velocity_.x);
+	if (info.hitRightWall)
+		velocity_.x = -std::abs(velocity_.x);
 
-	if (info.hitLeftWall || info.hitRightWall) {
-		velocity_.x *= -1.0f;
-	}
-
-	if (info.ceiling || info.landing) {
-		velocity_.y *= -1.0f;
-	}
+	// Y軸反射
+	if (info.ceiling)
+		velocity_.y = -std::abs(velocity_.y);
+	if (info.landing)
+		velocity_.y = std::abs(velocity_.y);
 }
 
 void P_Bullet::Draw() 
