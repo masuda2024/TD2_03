@@ -5,6 +5,8 @@
 #include "Skydome.h"
 
 
+#include "MapChipField.h"
+
 #include "Player.h"
 #include "P_DeathParticle.h"
 #include "P_Bullet.h"
@@ -76,7 +78,18 @@ private:
 	KamataEngine::Sprite* sprite_ = nullptr;
 
 	// 3D
-	// KamataEngine::Model* cube_ = nullptr;
+	// KamataEngine::Model* cube_ = n
+	// 
+	 #pragma region ブロック
+
+	
+	KamataEngine::Model* modelBlock_;
+
+	// マップチップフィールド
+	MapChipField* mapChipField_;
+
+	
+	void GenerateBlocks();
 
 #pragma region プレイヤー
 
